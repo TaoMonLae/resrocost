@@ -233,6 +233,19 @@ Start with the [production deployment guide](docs/DEPLOYMENT.md). The included
 `deploy/deploy.sh`, `deploy/nginx.conf`, and `ecosystem.config.cjs` files are
 intended to be reviewed and adapted to the target infrastructure before use.
 
+### Vercel test deployment
+
+RestroCost can also be deployed to Vercel for testing. Connect a hosted
+PostgreSQL database and configure `DATABASE_URL`, `AUTH_SECRET`, `AUTH_URL`,
+`NEXT_PUBLIC_APP_URL`, and `DEFAULT_CURRENCY` in the Vercel project.
+
+The `vercel-build` script generates Prisma Client, applies checked-in
+migrations, and creates the production build. New users can then register at
+`/register` and continue directly into restaurant onboarding.
+
+See the [Vercel deployment guide](docs/VERCEL.md) for the complete setup and
+signup checklist.
+
 ## Documentation
 
 - [Calculation methodology](docs/CALCULATIONS.md)
@@ -244,6 +257,7 @@ intended to be reviewed and adapted to the target infrastructure before use.
 - [CSV imports and exports](docs/CSV_IMPORTS.md)
 - [Security model](docs/SECURITY.md)
 - [Production deployment](docs/DEPLOYMENT.md)
+- [Vercel test deployment](docs/VERCEL.md)
 - [Backup and recovery](docs/BACKUP.md)
 
 ## Project status

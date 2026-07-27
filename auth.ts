@@ -7,12 +7,13 @@ import { prisma } from "@/lib/prisma";
 import { checkRateLimit, clearRateLimit } from "@/lib/security/rate-limit";
 
 const credentialsSchema = z.object({
-  email: z.string().email().transform((value) => value.toLowerCase()),
+  email: z.string().trim().email().transform((value) => value.toLowerCase()),
   password: z.string().min(8).max(128),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",

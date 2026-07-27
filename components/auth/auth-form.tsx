@@ -61,7 +61,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
 
         <div className="relative flex items-end justify-between border-t border-white/14 pt-5 text-xs text-white/55">
           <span>Restaurant cost & profit management</span>
-          <span>Phase 1 · Foundation</span>
+          <span>Production-ready · Six phases complete</span>
         </div>
       </section>
 
