@@ -47,6 +47,7 @@ export function standardConversionFactor(from: Unit, to: Unit) {
   if (!areUnitsCompatible(from, to)) {
     throw new Error(`Cannot convert ${from} to incompatible unit ${to}`);
   }
+  if (from === to) return new Prisma.Decimal(1);
 
   if (
     getUnitDimension(from) === "COUNT" &&
