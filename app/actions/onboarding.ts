@@ -4,6 +4,7 @@ import { AuditAction, Unit } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { auth } from "@/auth";
+import { isSupportedCurrency } from "@/lib/currency";
 import { prisma } from "@/lib/prisma";
 
 export type OnboardingState = {
@@ -12,7 +13,11 @@ export type OnboardingState = {
 
 const onboardingSchema = z.object({
   restaurantName: z.string().trim().min(2).max(120),
-  currency: z.string().length(3).transform((value) => value.toUpperCase()),
+  currency: z
+    .string()
+    .trim()
+    .transform((value) => value.toUpperCase())
+    .refine(isSupportedCurrency, "Select a supported currency"),
   country: z.string().length(2).transform((value) => value.toUpperCase()),
   timezone: z.string().min(2).max(80),
   taxRate: z.coerce.number().min(0).max(100),

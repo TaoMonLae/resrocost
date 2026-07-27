@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requirePermission } from "@/lib/tenant";
+import { isSupportedCurrency } from "@/lib/currency";
 
 const memberSchema = z.object({
   email: z.string().email().transform((value) => value.toLowerCase()),
@@ -81,7 +82,11 @@ export async function updateTeamRoleAction(formData: FormData) {
 
 const settingsSchema = z.object({
   name: z.string().trim().min(2).max(120),
-  currency: z.string().trim().length(3).transform((value) => value.toUpperCase()),
+  currency: z
+    .string()
+    .trim()
+    .transform((value) => value.toUpperCase())
+    .refine(isSupportedCurrency, "Select a supported currency"),
   country: z.string().trim().length(2).transform((value) => value.toUpperCase()),
   timezone: z.string().trim().min(2).max(80),
   taxRate: z.coerce.number().min(0).max(100),
@@ -132,8 +137,7 @@ export async function updateRestaurantSettingsAction(formData: FormData) {
       },
     },
   });
-  revalidatePath("/settings");
-  revalidatePath("/dashboard");
+  revalidatePath("/", "layout");
 }
 
 const branchSchema = z.object({

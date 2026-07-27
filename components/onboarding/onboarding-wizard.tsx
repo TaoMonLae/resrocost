@@ -23,6 +23,7 @@ import { SubmitButton } from "@/components/forms/submit-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 
 const initialState: OnboardingState = {};
@@ -158,13 +159,11 @@ export function OnboardingWizard({ userName }: { userName?: string | null }) {
                   </Field>
                   <Field label="Currency">
                     <select className={selectClass} defaultValue="MYR" name="currency">
-                      <option value="MYR">MYR · Malaysian Ringgit</option>
-                      <option value="USD">USD · US Dollar</option>
-                      <option value="SGD">SGD · Singapore Dollar</option>
-                      <option value="THB">THB · Thai Baht</option>
-                      <option value="IDR">IDR · Indonesian Rupiah</option>
-                      <option value="EUR">EUR · Euro</option>
-                      <option value="GBP">GBP · British Pound</option>
+                      {SUPPORTED_CURRENCIES.map((currency) => (
+                        <option key={currency.code} value={currency.code}>
+                          {currency.code} · {currency.label}
+                        </option>
+                      ))}
                     </select>
                   </Field>
                   <Field label="Timezone">
