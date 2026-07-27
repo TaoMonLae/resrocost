@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export function BrandMark({
@@ -9,12 +10,15 @@ export function BrandMark({
 }) {
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
-      <span
+      <Image
+        alt=""
         aria-hidden="true"
-        className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-[var(--ink)] text-sm font-semibold text-[var(--surface)]"
-      >
-        R
-      </span>
+        className="size-9 shrink-0"
+        height={36}
+        priority
+        src="/brand/restrocost-mark.png"
+        width={36}
+      />
       {!compact && (
         <span className="text-[15px] font-semibold tracking-[-0.02em]">
           RestroCost

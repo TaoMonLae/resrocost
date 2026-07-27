@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   description:
     "Restaurant cost, recipe pricing, inventory, sales, and profit management.",
   applicationName: "RestroCost",
+  icons: {
+    icon: [{ type: "image/png", url: "/icon.png" }],
+    apple: [{ type: "image/png", url: "/apple-icon.png" }],
+  },
   openGraph: {
     title: "RestroCost · Know what every plate really costs.",
     description:
