@@ -1,0 +1,128 @@
+# RestroCost Mon translation catalog.
+# Copyright (C) 2026 Tao Mon Lae
+# This file is distributed under the same license as the RestroCost project.
+#
+# The entries below are intentionally marked fuzzy until reviewed by a native
+# Mon translator. This prevents an unreviewed translation from being shown to
+# users when the catalog is compiled.
+msgid ""
+msgstr ""
+"Project-Id-Version: RestroCost 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 00:00+0000\n"
+"PO-Revision-Date: 2026-07-27 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Mon\n"
+"Language: mnw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "Create your account"
+msgstr ""
+
+#, fuzzy
+msgid "Create account"
+msgstr ""
+
+#, fuzzy
+msgid "Sign in"
+msgstr ""
+
+#, fuzzy
+msgid "Sign out"
+msgstr ""
+
+#, fuzzy
+msgid "Full name"
+msgstr ""
+
+#, fuzzy
+msgid "Work email"
+msgstr ""
+
+#, fuzzy
+msgid "Password"
+msgstr ""
+
+#, fuzzy
+msgid "Already have an account?"
+msgstr ""
+
+#, fuzzy
+msgid "New to RestroCost?"
+msgstr ""
+
+#, fuzzy
+msgid "Welcome back"
+msgstr ""
+
+#, fuzzy
+msgid "Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Restaurant settings"
+msgstr ""
+
+#, fuzzy
+msgid "Save settings"
+msgstr ""
+
+#, fuzzy
+msgid "Currency"
+msgstr ""
+
+#, fuzzy
+msgid "Country code"
+msgstr ""
+
+#, fuzzy
+msgid "Timezone"
+msgstr ""
+
+#, fuzzy
+msgid "Dashboard"
+msgstr ""
+
+#, fuzzy
+msgid "Reports"
+msgstr ""
+
+#, fuzzy
+msgid "Ingredients"
+msgstr ""
+
+#, fuzzy
+msgid "Recipes"
+msgstr ""
+
+#, fuzzy
+msgid "Menu items"
+msgstr ""
+
+#, fuzzy
+msgid "Sales"
+msgstr ""
+
+#, fuzzy
+msgid "Purchases"
+msgstr ""
+
+#, fuzzy
+msgid "Inventory"
+msgstr ""
+
+#, fuzzy
+msgid "Reload view"
+msgstr ""
+
+#, fuzzy
+msgid "An account already exists for this email."
+msgstr ""
+
+#, fuzzy
+msgid "Your account was created. Please sign in to continue."
+msgstr ""

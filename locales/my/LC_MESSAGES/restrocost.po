@@ -1,0 +1,97 @@
+# RestroCost Burmese translations.
+# Copyright (C) 2026 Tao Mon Lae
+# This file is distributed under the same license as the RestroCost project.
+msgid ""
+msgstr ""
+"Project-Id-Version: RestroCost 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 00:00+0000\n"
+"PO-Revision-Date: 2026-07-27 00:00+0000\n"
+"Last-Translator: Tao Mon Lae\n"
+"Language-Team: Burmese\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Create your account"
+msgstr "သင့်အကောင့်ကို ဖန်တီးပါ"
+
+msgid "Create account"
+msgstr "အကောင့်ဖန်တီးရန်"
+
+msgid "Sign in"
+msgstr "အကောင့်ဝင်ရန်"
+
+msgid "Sign out"
+msgstr "အကောင့်ထွက်ရန်"
+
+msgid "Full name"
+msgstr "အမည်အပြည့်အစုံ"
+
+msgid "Work email"
+msgstr "အလုပ်အီးမေးလ်"
+
+msgid "Password"
+msgstr "စကားဝှက်"
+
+msgid "Already have an account?"
+msgstr "အကောင့်ရှိပြီးသားလား?"
+
+msgid "New to RestroCost?"
+msgstr "RestroCost ကို အသစ်အသုံးပြုမလား?"
+
+msgid "Welcome back"
+msgstr "ပြန်လည်ကြိုဆိုပါသည်"
+
+msgid "Settings"
+msgstr "ဆက်တင်များ"
+
+msgid "Restaurant settings"
+msgstr "စားသောက်ဆိုင် ဆက်တင်များ"
+
+msgid "Save settings"
+msgstr "ဆက်တင်များ သိမ်းဆည်းရန်"
+
+msgid "Currency"
+msgstr "ငွေကြေး"
+
+msgid "Country code"
+msgstr "နိုင်ငံကုဒ်"
+
+msgid "Timezone"
+msgstr "အချိန်ဇုန်"
+
+msgid "Dashboard"
+msgstr "အချက်အလက်အကျဉ်းချုပ်"
+
+msgid "Reports"
+msgstr "အစီရင်ခံစာများ"
+
+msgid "Ingredients"
+msgstr "ပါဝင်ပစ္စည်းများ"
+
+msgid "Recipes"
+msgstr "ချက်ပြုတ်နည်းများ"
+
+msgid "Menu items"
+msgstr "မီနူးပစ္စည်းများ"
+
+msgid "Sales"
+msgstr "အရောင်းများ"
+
+msgid "Purchases"
+msgstr "ဝယ်ယူမှုများ"
+
+msgid "Inventory"
+msgstr "ကုန်ပစ္စည်းစာရင်း"
+
+msgid "Reload view"
+msgstr "စာမျက်နှာ ပြန်ဖွင့်ရန်"
+
+msgid "An account already exists for this email."
+msgstr "ဤအီးမေးလ်ဖြင့် အကောင့်ရှိပြီးဖြစ်သည်။"
+
+msgid "Your account was created. Please sign in to continue."
+msgstr "သင့်အကောင့်ကို ဖန်တီးပြီးပါပြီ။ ဆက်လက်ရန် အကောင့်ဝင်ပါ။"
