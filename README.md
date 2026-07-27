@@ -3,7 +3,7 @@
 Restaurant cost, recipe pricing, inventory, sales, and profit management for
 multi-branch operators.
 
-Phases 1 through 3 establish the foundation, supply workflow, and menu economics:
+Phases 1 through 4 establish the foundation and complete the core operating loop:
 
 - Next.js App Router, React, TypeScript, and Tailwind CSS
 - shadcn/ui-compatible component configuration
@@ -19,6 +19,8 @@ Phases 1 through 3 establish the foundation, supply workflow, and menu economics
 - append-only inventory movements, stock adjustments, and low-stock visibility
 - versioned recipes with ingredient and sub-recipe cost snapshots
 - menu item full-cost, profit, target-price, and channel-fee analysis
+- actual sales with immutable price, cost, fee, and profit snapshots
+- transaction-safe recipe stock deductions, expenses, and waste records
 
 ## Requirements
 
@@ -111,7 +113,7 @@ npm run build
 1. **Foundation** — complete: auth, tenants, onboarding, permissions, shell, dashboard
 2. **Supply & stock** — complete: ingredients, suppliers, purchases, conversions, ledger
 3. **Recipes & pricing** — complete: recipes, sub-recipes, menu items, channels
-4. **Actuals** — sales, expenses, waste, immutable profit snapshots
+4. **Actuals** — complete: sales, expenses, waste, immutable profit snapshots
 5. **Intelligence** — dashboard charts, reports, break-even, menu engineering
 6. **Operations** — simulator, CSV workflows, hardening, docs, deployment
 

@@ -118,7 +118,7 @@ function SidebarContent({
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const active = pathname === item.href;
-                const available = item.phase <= 3;
+                const available = item.phase <= 4;
 
                 return (
                   <li key={item.href}>
@@ -174,7 +174,7 @@ function SidebarContent({
           </form>
         </div>
         <div className="mt-1 hidden justify-between px-2 lg:flex">
-          <Badge variant="neutral">Phase 3</Badge>
+          <Badge variant="neutral">Phase 4</Badge>
           <ThemeToggle />
         </div>
       </div>
