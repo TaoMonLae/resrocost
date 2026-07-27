@@ -258,6 +258,10 @@ The six planned delivery phases are complete:
 6. Scenario simulation, CSV workflows, testing, security hardening,
    documentation, and deployment configuration
 
+## License
+
+RestroCost is available under the [MIT License](LICENSE).
+
 ---
 
 **Developed by Tao Mon Lae**
