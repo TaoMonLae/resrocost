@@ -118,7 +118,7 @@ function SidebarContent({
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const active = pathname === item.href;
-                const available = item.phase === 1;
+                const available = item.phase <= 2;
 
                 return (
                   <li key={item.href}>
