@@ -13,6 +13,16 @@ export type AuthActionState = {
   error?: string;
 };
 
+function isRedirectError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "digest" in error &&
+    typeof error.digest === "string" &&
+    error.digest.startsWith("NEXT_REDIRECT")
+  );
+}
+
 const loginSchema = z.object({
   email: z.string().trim().email().transform((value) => value.toLowerCase()),
   password: z.string().min(8).max(128),
@@ -37,13 +47,13 @@ export async function loginAction(
   if (!parsed.success) {
     return { error: "Enter a valid email and a password of at least 8 characters." };
   }
-  const registrationLimit = checkRateLimit(`register:${parsed.data.email}`, {
-    limit: 5,
-    windowMs: 60 * 60 * 1000,
+  const loginLimit = checkRateLimit(`login:${parsed.data.email}`, {
+    limit: 8,
+    windowMs: 15 * 60 * 1000,
   });
-  if (!registrationLimit.allowed) {
+  if (!loginLimit.allowed) {
     return {
-      error: "Too many registration attempts. Please try again later.",
+      error: "Too many sign-in attempts. Please try again later.",
     };
   }
 
@@ -75,18 +85,18 @@ export async function registerAction(
     };
   }
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
-    select: { id: true },
-  });
-
-  if (existingUser) {
-    return { error: "An account already exists for this email." };
-  }
-
-  const passwordHash = await bcrypt.hash(parsed.data.password, 12);
-
   try {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: parsed.data.email },
+      select: { id: true },
+    });
+
+    if (existingUser) {
+      return { error: "An account already exists for this email." };
+    }
+
+    const passwordHash = await bcrypt.hash(parsed.data.password, 12);
+
     await prisma.user.create({
       data: {
         name: parsed.data.name,
@@ -101,7 +111,11 @@ export async function registerAction(
     ) {
       return { error: "An account already exists for this email." };
     }
-    throw error;
+    console.error("Account registration failed", error);
+    return {
+      error:
+        "We could not create your account right now. Please try again in a moment.",
+    };
   }
 
   try {
@@ -111,12 +125,16 @@ export async function registerAction(
       redirectTo: "/onboarding",
     });
   } catch (error) {
+    if (isRedirectError(error)) throw error;
     if (error instanceof AuthError) {
       return {
         error: "Your account was created. Please sign in to continue.",
       };
     }
-    throw error;
+    console.error("Automatic sign-in after registration failed", error);
+    return {
+      error: "Your account was created. Please sign in to continue.",
+    };
   }
 
   return {};
