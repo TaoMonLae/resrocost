@@ -17,8 +17,7 @@
 /.next/
 /.vinext/
 /out/
-# OpenAI configuration
-/.openai/
+
 # misc
 .DS_Store
 *.pem
