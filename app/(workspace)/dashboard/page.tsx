@@ -16,9 +16,14 @@ import {
   WalletCards,
 } from "lucide-react";
 import { format } from "date-fns";
+import {
+  refreshAlertsAction,
+  resolveAlertAction,
+} from "@/app/actions/alerts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PerformanceChart } from "@/components/reports/performance-chart";
 import { getDashboardSummary } from "@/lib/dashboard";
 import { getVerifiedMembership } from "@/lib/tenant";
 import { cn, formatMoney, formatPercent } from "@/lib/utils";
@@ -187,19 +192,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent className="p-0">
               {hasTradingData ? (
-                <div className="grid min-h-[260px] place-items-center p-8 text-center">
-                  <div>
-                    <TrendingUp className="mx-auto size-8 text-[var(--forest)]" />
-                    <p className="mt-4 text-sm font-medium">
-                      Your ledger is active
-                    </p>
-                    <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                      Sales and cost trend charts are scheduled for Phase 5,
-                      after the purchase, recipe, and sales workflows establish
-                      reliable time-series data.
-                    </p>
-                  </div>
-                </div>
+                <PerformanceChart currency={currency} data={summary.trend} />
               ) : (
                 <EmptyDashboardState />
               )}
@@ -214,11 +207,14 @@ export default async function DashboardPage() {
                   Open margin and inventory alerts
                 </p>
               </div>
-              <Badge
-                variant={summary.alerts.length ? "warning" : "neutral"}
-              >
-                {summary.alerts.length} open
-              </Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant={summary.alerts.length ? "warning" : "neutral"}>
+                  {summary.alerts.length} open
+                </Badge>
+                <form action={refreshAlertsAction}>
+                  <Button size="sm" type="submit" variant="ghost">Refresh</Button>
+                </form>
+              </div>
             </CardHeader>
             <CardContent className="p-0">
               {summary.alerts.length ? (
@@ -243,6 +239,12 @@ export default async function DashboardPage() {
                         <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">
                           {alert.description}
                         </p>
+                        <form action={resolveAlertAction} className="mt-2">
+                          <input name="alertId" type="hidden" value={alert.id} />
+                          <button className="text-[11px] font-medium text-[var(--forest)] hover:underline" type="submit">
+                            Resolve
+                          </button>
+                        </form>
                       </div>
                     </li>
                   ))}
@@ -324,13 +326,12 @@ function EmptyDashboardState() {
         </span>
         <h3 className="mt-4 text-base font-medium">Your operating view is ready</h3>
         <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-          Add opening ingredients in Phase 2, then record purchases and sales.
-          This dashboard reads the resulting ledger directly—there are no
-          fabricated performance numbers.
+          Add ingredients, recipes, menu items, and a sale. This dashboard
+          reads the resulting ledger directly—there are no fabricated
+          performance numbers.
         </p>
-        <Button className="mt-5" disabled variant="outline">
-          Ingredients arrive in Phase 2
-          <ArrowUpRight />
+        <Button asChild className="mt-5" variant="outline">
+          <a href="/sales/new">Record a sale <ArrowUpRight /></a>
         </Button>
       </div>
     </div>

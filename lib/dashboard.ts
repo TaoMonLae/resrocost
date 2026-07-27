@@ -1,7 +1,7 @@
 import "server-only";
 
 import { AlertSeverity, Prisma } from "@prisma/client";
-import { endOfDay, startOfMonth } from "date-fns";
+import { eachDayOfInterval, endOfDay, format, startOfMonth } from "date-fns";
 import { prisma } from "@/lib/prisma";
 
 const zero = new Prisma.Decimal(0);
@@ -31,13 +31,14 @@ export async function getDashboardSummary(restaurantId: string, now = new Date()
         defaultProfitMargin: true,
       },
     }),
-    prisma.sale.aggregate({
+    prisma.sale.findMany({
       where: {
         restaurantId,
         soldAt: { gte: from, lte: to },
         deletedAt: null,
       },
-      _sum: {
+      select: {
+        soldAt: true,
         totalAmount: true,
         totalCost: true,
         totalProfit: true,
@@ -82,10 +83,19 @@ export async function getDashboardSummary(restaurantId: string, now = new Date()
     }),
   ]);
 
-  const totalSales = sales._sum.totalAmount ?? zero;
-  const totalCost = sales._sum.totalCost ?? zero;
+  const totalSales = sales.reduce(
+    (sum, sale) => sum.plus(sale.totalAmount),
+    new Prisma.Decimal(0),
+  );
+  const totalCost = sales.reduce(
+    (sum, sale) => sum.plus(sale.totalCost),
+    new Prisma.Decimal(0),
+  );
   const grossProfit = totalSales.minus(totalCost);
-  const totalProfit = sales._sum.totalProfit ?? zero;
+  const totalProfit = sales.reduce(
+    (sum, sale) => sum.plus(sale.totalProfit),
+    new Prisma.Decimal(0),
+  );
   const ingredientSpend = purchases._sum.total ?? zero;
   const recordedFixedExpenses = fixedExpenses._sum.amount ?? zero;
   const fixedExpenseTarget = restaurant.monthlyFixedExpenses;
@@ -111,6 +121,19 @@ export async function getDashboardSummary(restaurantId: string, now = new Date()
         totalProfit.div(fixedExpenseTotal).mul(100),
         new Prisma.Decimal(100),
       );
+  const dailyTotals = new Map<string, { revenue: number; profit: number }>();
+  for (const sale of sales) {
+    const key = format(sale.soldAt, "yyyy-MM-dd");
+    const current = dailyTotals.get(key) ?? { revenue: 0, profit: 0 };
+    current.revenue += sale.totalAmount.toNumber();
+    current.profit += sale.totalProfit.toNumber();
+    dailyTotals.set(key, current);
+  }
+  const trend = eachDayOfInterval({ start: from, end: to }).map((day) => {
+    const key = format(day, "yyyy-MM-dd");
+    const total = dailyTotals.get(key) ?? { revenue: 0, profit: 0 };
+    return { date: format(day, "MMM d"), ...total };
+  });
 
   return {
     currency: restaurant.currency,
@@ -131,6 +154,7 @@ export async function getDashboardSummary(restaurantId: string, now = new Date()
       foodCostPercentage: restaurant.defaultFoodCostPercent,
       profitMargin: restaurant.defaultProfitMargin,
     },
+    trend,
     alerts: alerts.map((alert) => ({
       ...alert,
       severityRank:

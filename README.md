@@ -3,7 +3,7 @@
 Restaurant cost, recipe pricing, inventory, sales, and profit management for
 multi-branch operators.
 
-Phases 1 through 4 establish the foundation and complete the core operating loop:
+Phases 1 through 5 establish the operating loop and its decision layer:
 
 - Next.js App Router, React, TypeScript, and Tailwind CSS
 - shadcn/ui-compatible component configuration
@@ -21,6 +21,8 @@ Phases 1 through 4 establish the foundation and complete the core operating loop
 - menu item full-cost, profit, target-price, and channel-fee analysis
 - actual sales with immutable price, cost, fee, and profit snapshots
 - transaction-safe recipe stock deductions, expenses, and waste records
+- real daily performance charts and refreshable operational alerts
+- profitability, menu engineering, and break-even reports
 
 ## Requirements
 
@@ -114,7 +116,7 @@ npm run build
 2. **Supply & stock** — complete: ingredients, suppliers, purchases, conversions, ledger
 3. **Recipes & pricing** — complete: recipes, sub-recipes, menu items, channels
 4. **Actuals** — complete: sales, expenses, waste, immutable profit snapshots
-5. **Intelligence** — dashboard charts, reports, break-even, menu engineering
+5. **Intelligence** — complete: dashboard charts, reports, break-even, menu engineering
 6. **Operations** — simulator, CSV workflows, hardening, docs, deployment
 
 See [permission rules](docs/PERMISSIONS.md) and
