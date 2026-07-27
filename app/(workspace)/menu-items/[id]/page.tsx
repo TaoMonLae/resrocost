@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { prisma } from "@/lib/prisma";
 import { calculateChannelEconomics, calculateMenuEconomics } from "@/lib/services/pricing-service";
+import { calculateMarginAndMarkup } from "@/lib/services/profit-service";
 import { getVerifiedMembership } from "@/lib/tenant";
 import { formatMoney, formatPercent } from "@/lib/utils";
 
@@ -44,16 +45,25 @@ export default async function MenuItemDetailPage({ params }: { params: Promise<{
     targetFoodCostPercentage: item.targetFoodCostPercentage,
     targetProfitMargin: item.targetProfitMargin,
   });
+  const marginAndMarkup = calculateMarginAndMarkup({
+    revenue: item.currentBaseSellingPrice,
+    cost: item.currentFullCost,
+  });
+  const foodCostPercentage = item.currentBaseSellingPrice.gt(0)
+    ? item.currentFoodCost.div(item.currentBaseSellingPrice).mul(100)
+    : item.currentFoodCost.mul(0);
   return (
     <main className="min-h-screen">
       <PageHeader description={`${item.category?.name ?? "Uncategorised"} · ${item.recipe?.name ?? "No linked recipe"}`} eyebrow="Menu item" icon={ChefHat} title={item.name} />
       <div className="mx-auto grid max-w-[1540px] gap-5 px-5 py-7 sm:px-8 lg:grid-cols-[1fr_380px]">
         <div className="space-y-5">
-          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <Metric label="Selling price" value={formatMoney(item.currentBaseSellingPrice.toNumber(), membership.restaurant.currency)} />
             <Metric label="Food cost" value={formatMoney(item.currentFoodCost.toNumber(), membership.restaurant.currency)} />
             <Metric label="Full cost" value={formatMoney(item.currentFullCost.toNumber(), membership.restaurant.currency)} />
             <Metric label="Profit margin" value={formatPercent(item.currentProfitMargin.toNumber())} />
+            <Metric label="Markup on cost" value={formatPercent(marginAndMarkup.markupPercentage.toNumber())} />
+            <Metric label="Food-cost percentage" value={formatPercent(foodCostPercentage.toNumber())} />
           </section>
           <Card><CardHeader><CardTitle>Channel economics</CardTitle></CardHeader><CardContent className="space-y-3">
             {item.channelPrices.map((channelPrice) => {

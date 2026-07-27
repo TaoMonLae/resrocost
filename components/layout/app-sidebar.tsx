@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronDown, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
+import type { Role } from "@prisma/client";
 import { logoutAction } from "@/app/actions/auth";
 import { BrandMark } from "@/components/brand-mark";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
@@ -12,10 +13,11 @@ import { navigation } from "@/components/layout/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn, initials } from "@/lib/utils";
+import { can } from "@/lib/permissions";
 
 type SidebarProps = {
   restaurantName: string;
-  role: string;
+  role: Role;
   user: {
     name?: string | null;
     email?: string | null;
@@ -118,7 +120,8 @@ function SidebarContent({
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const active = pathname === item.href;
-                const available = item.phase <= 5;
+                const available = item.phase <= 6;
+                if (!canAccessRoute(role, item.href)) return null;
 
                 return (
                   <li key={item.href}>
@@ -174,10 +177,38 @@ function SidebarContent({
           </form>
         </div>
         <div className="mt-1 hidden justify-between px-2 lg:flex">
-          <Badge variant="neutral">Phase 5</Badge>
+          <Badge variant="neutral">Phase 6</Badge>
           <ThemeToggle />
         </div>
       </div>
     </div>
   );
+}
+
+function canAccessRoute(role: Role, href: string) {
+  if (href === "/team") return can(role, "team:manage");
+  if (href === "/settings") return can(role, "restaurant:manage");
+  if (["/ingredients", "/inventory"].includes(href)) {
+    return can(role, "ingredients:read");
+  }
+  if (["/suppliers", "/purchases"].includes(href)) {
+    return can(role, "purchases:write");
+  }
+  if (href === "/recipes") return can(role, "recipes:read");
+  if (["/menu-items", "/pricing", "/sales-channels"].includes(href)) {
+    return can(role, "menu:read");
+  }
+  if (href === "/sales") {
+    return can(role, "sales:write") || can(role, "reports:read");
+  }
+  if (href === "/expenses") {
+    return can(role, "expenses:write") || can(role, "reports:financial");
+  }
+  if (href === "/waste") {
+    return can(role, "waste:write") || can(role, "reports:read");
+  }
+  if (["/reports", "/scenario-simulator"].includes(href)) {
+    return can(role, "reports:read");
+  }
+  return true;
 }

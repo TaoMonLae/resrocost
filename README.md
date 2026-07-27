@@ -3,7 +3,7 @@
 Restaurant cost, recipe pricing, inventory, sales, and profit management for
 multi-branch operators.
 
-Phases 1 through 5 establish the operating loop and its decision layer:
+All six delivery phases are complete:
 
 - Next.js App Router, React, TypeScript, and Tailwind CSS
 - shadcn/ui-compatible component configuration
@@ -23,6 +23,9 @@ Phases 1 through 5 establish the operating loop and its decision layer:
 - transaction-safe recipe stock deductions, expenses, and waste records
 - real daily performance charts and refreshable operational alerts
 - profitability, menu engineering, and break-even reports
+- non-destructive scenario simulation with saved comparisons
+- mapped CSV import/export workflows for six operational record types
+- team roles, restaurant settings, security controls, and production deployment assets
 
 ## Requirements
 
@@ -117,9 +120,19 @@ npm run build
 3. **Recipes & pricing** — complete: recipes, sub-recipes, menu items, channels
 4. **Actuals** — complete: sales, expenses, waste, immutable profit snapshots
 5. **Intelligence** — complete: dashboard charts, reports, break-even, menu engineering
-6. **Operations** — simulator, CSV workflows, hardening, docs, deployment
+6. **Operations** — complete: simulator, CSV workflows, hardening, docs, deployment
 
 See [permission rules](docs/PERMISSIONS.md) and
 [calculation methodology](docs/CALCULATIONS.md). The
 [inventory operations guide](docs/INVENTORY.md) explains unit conversion,
 costing, and correction rules.
+
+Additional operational guides:
+
+- [Recipe and pricing methodology](docs/PRICING.md)
+- [Actual sales, expenses, and waste](docs/ACTUALS.md)
+- [Reports and alerts](docs/REPORTS.md)
+- [CSV imports and exports](docs/CSV_IMPORTS.md)
+- [Security model](docs/SECURITY.md)
+- [Production deployment](docs/DEPLOYMENT.md)
+- [Backup and recovery](docs/BACKUP.md)

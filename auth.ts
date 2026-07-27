@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit, clearRateLimit } from "@/lib/security/rate-limit";
 
 const credentialsSchema = z.object({
   email: z.string().email().transform((value) => value.toLowerCase()),
@@ -26,6 +27,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(rawCredentials) {
         const parsed = credentialsSchema.safeParse(rawCredentials);
         if (!parsed.success) return null;
+        const rateLimitKey = `auth:${parsed.data.email}`;
+        const limit = checkRateLimit(rateLimitKey, {
+          limit: 8,
+          windowMs: 15 * 60 * 1000,
+        });
+        if (!limit.allowed) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: parsed.data.email },
@@ -39,6 +46,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         );
 
         if (!passwordMatches) return null;
+        clearRateLimit(rateLimitKey);
 
         return {
           id: user.id,
